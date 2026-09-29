@@ -1,0 +1,282 @@
+/* App.css
+ * -------
+ * Replaces the Vite starter styles with a clean, readable layout for
+ * both the auth card and the task manager card.
+ *
+ * Colour palette uses CSS custom properties so individual pieces are
+ * easy to tweak without hunting through the whole file.
+ */
+
+/* ── Custom properties (design tokens) ──────────────────────────────── */
+:root {
+  --bg:          #f0f2f5;       /* page background */
+  --card-bg:     #ffffff;       /* card surface */
+  --border:      #d9d9d9;       /* input / list borders */
+  --text:        #333333;       /* body copy */
+  --text-muted:  #888888;       /* labels, helper copy */
+  --accent:      #4f6ef7;       /* primary button / checkbox */
+  --accent-hover:#3a56d4;       /* primary button hover */
+  --danger:      #e53935;       /* delete button */
+  --danger-hover:#c62828;
+  --error-bg:    #fff0f0;
+  --error-text:  #c0392b;
+  --radius:      10px;
+  --shadow:      0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+/* ── Reset / base ────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ── Page wrapper: centres the card vertically and horizontally ──────── */
+.app-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+}
+
+/* ── Card (used by both AuthForm and TaskManager) ────────────────────── */
+.card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 36px 32px;
+  width: 100%;
+  max-width: 480px;
+}
+
+.card h2 {
+  font-size: 1.4rem;
+  margin-bottom: 20px;
+  color: var(--text);
+}
+
+/* ── Form groups (label + input stacked vertically) ──────────────────── */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.form-group input,
+.add-form input {
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 1rem;
+  color: var(--text);
+  transition: border-color 0.2s;
+  width: 100%;
+}
+
+.form-group input:focus,
+.add-form input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(79, 110, 247, 0.15);
+}
+
+/* ── Primary action button ───────────────────────────────────────────── */
+.btn-primary {
+  display: block;
+  width: 100%;
+  padding: 11px;
+  margin-top: 8px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--accent-hover);
+}
+
+.btn-primary:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* ── Error banner ────────────────────────────────────────────────────── */
+.error {
+  background: var(--error-bg);
+  color: var(--error-text);
+  border: 1px solid var(--error-text);
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: 0.9rem;
+  margin-bottom: 14px;
+}
+
+/* ── Mode-switch link (Log In ↔ Register) ────────────────────────────── */
+.switch-mode {
+  margin-top: 20px;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.link-btn {
+  background: none;
+  border: none;
+  color: var(--accent);
+  font-size: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+}
+
+.link-btn:hover {
+  color: var(--accent-hover);
+}
+
+/* ── TaskManager card overrides ──────────────────────────────────────── */
+.task-manager {
+  max-width: 560px;   /* slightly wider than the auth card */
+}
+
+/* Header row: greeting on the left, logout button on the right */
+.tm-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.btn-logout {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.btn-logout:hover {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+/* ── Add-task form (inline input + button on one row) ────────────────── */
+.add-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.add-form input {
+  flex: 1;
+}
+
+/* Override full-width for the Add button when it's inline */
+.add-form .btn-primary {
+  width: auto;
+  margin-top: 0;
+  padding: 10px 18px;
+  white-space: nowrap;
+}
+
+/* ── Task list ───────────────────────────────────────────────────────── */
+.task-list {
+  list-style: none;
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Individual task row */
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--card-bg);
+  transition: background 0.15s;
+}
+
+.task-item:hover {
+  background: #fafafa;
+}
+
+/* Style for completed tasks */
+.task-item.completed {
+  opacity: 0.6;
+}
+
+.task-item.completed .task-title {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+/* Checkbox */
+.task-item input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* Task title: takes all available space so the delete button stays right */
+.task-title {
+  flex: 1;
+  font-size: 1rem;
+  word-break: break-word;
+}
+
+/* Delete button */
+.btn-delete {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition: color 0.2s, background 0.2s;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.btn-delete:hover {
+  color: var(--danger-hover);
+  background: #fdecea;
+}
+
+/* ── Empty state ─────────────────────────────────────────────────────── */
+.empty-state {
+  color: var(--text-muted);
+  text-align: center;
+  padding: 32px 0;
+  font-size: 0.95rem;
+}
